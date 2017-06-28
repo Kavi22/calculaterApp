@@ -1,0 +1,7 @@
+.component-Display {
+    background-color: grey;
+    width: 400px;
+    height: 100px;
+    box-sizing: border-box;
+    font-size: 60pt;
+}
