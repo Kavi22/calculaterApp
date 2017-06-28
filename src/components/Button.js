@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import './Button.css';
 
 class Button extends React.Component{
-    render (){
+    render () {
         return (
-            <button className="component-Button">
+            <button onClick={this.props.handleClick} className="component-Button">
                 {this.props.children}
             </button>
         );
@@ -13,7 +13,7 @@ class Button extends React.Component{
 }
 
 Button.propTypes = {
-    children: PropTypes.string.isRequired
+    children: PropTypes.any.isRequired
 }
 
 export default Button;

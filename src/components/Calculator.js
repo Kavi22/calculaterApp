@@ -2,43 +2,81 @@ import React from 'react';
 
 import Display from './Display';
 import Button from './Button';
+import NumberPad from './NumberPad';
+import OperatorPad from './OperatorPad';
 
 import './Calculator.css';
 
-const numberPadButtons = [
-    ['AC', '--', '--', '%'],
-    [7, 8, 9, 'X'],
-    [4, 5, 6, '-'],
-    [1, 2, 3, '+'],
-    [0, '.', '--', '=']
-]
+
+const allOperators= {
+    '+': function(num1, num2){
+        return num1 + num2;
+    }
+};
+
 
 class Calculator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {displayNumber: 0}
+        this.state = {
+            leftNumber: '',
+            operator: '',
+            rightNumber: '',
+            equalOp: ''
+    };
+        this.addNumber = this.addNumber.bind(this);
+        this.addOperator = this.addOperator.bind(this);
     }
-
-    render (){
+    addNumber(e) {
+        e.preventDefault();
+        const value = e.target.innerHTML;
+        if (this.state.operator === '') {
+            this.setState({
+                leftNumber: this.state.leftNumber  + value 
+            });
+        } else {
+            this.setState({
+                rightNumber: this.state.rightNumber  + value 
+            });
+        }
+    }
+    addOperator(e) {
+        const value = e.target.innerHTML;
+        if(value !== '=')
+        this.setState({
+            operator: value
+        });
+        else 
+          this.setState({
+            equalOp: value
+        });
+    }
+    render() {
+        let displayValue = this.state.operator === '' ? this.state.leftNumber : this.state.rightNumber;
+        // let end;
+        // if (this.state.leftNumber && this.state.operator && this.state.rightNumber) {
+        //     const func = allOperators[this.state.operator];
+        //     const result = func(Number(this.state.leftNumber), Number(this.state.rightNumber));
+        //     return end = result;
+        // }
+        // if (this.state.equalOp) {
+        //    return displayValue = end;
+        // }
         return (
-            <div className="component-Calculator">
-                <Display onSelection={this.displayNumber} />
-
-                <div className="NumberPad">
-                    {numberPadButtons.map((row) => {
-                        return (
-                            <div className="buttonRow">
-                                {row.map((value) => {
-                                    return <Button>{value}</Button>
-                                })}
-                            </div>
-                        );
-                    })}                   
+            <div>
+                <div className = "component-Calculator" >
+                    <Display newNumber = {displayValue}/>              
                 </div>
+                <div>
+                     <NumberPad addNumber={this.addNumber}/>
+                     <OperatorPad addOperator={this.addOperator}/>
+                 </div>
+
             </div>
         );
-
     }
 }
 
 export default Calculator;
+
+// grab the number is display

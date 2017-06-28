@@ -6,7 +6,7 @@ class Display extends React.Component {
     render() {
         return (
             <div className="component-Display">
-                <span>0</span>
+                <span>{this.props.newNumber}</span>
             </div>
         );
     }

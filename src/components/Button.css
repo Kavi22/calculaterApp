@@ -1,6 +1,14 @@
+@fontface {
+    font-family: 'Indie Flower', cursive;
+    src: url("https://fonts.googleapis.com/css?family=Indie+Flower|Source+Sans+Pro" rel="stylesheet")
+
+
+}
+
 .component-Button {
     width: 100px;
     height: 100px;
     box-sizing: border-box;
     font-size: 30pt;
+    font-family: 'Indie Flower', cursive;
 }
