@@ -7,25 +7,17 @@ import OperatorPad from './OperatorPad';
 
 import './Calculator.css';
 
-
-const allOperators= {
-    '+': function(num1, num2){
-        return num1 + num2;
-    }
-};
-
-
 class Calculator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             leftNumber: '',
             operator: '',
-            rightNumber: '',
-            equalOp: ''
+            rightNumber: ''
     };
         this.addNumber = this.addNumber.bind(this);
         this.addOperator = this.addOperator.bind(this);
+        this.calculateResult = this.calculateResult.bind(this);
     }
     addNumber(e) {
         e.preventDefault();
@@ -42,36 +34,44 @@ class Calculator extends React.Component {
     }
     addOperator(e) {
         const value = e.target.innerHTML;
-        if(value !== '=')
         this.setState({
             operator: value
         });
-        else 
-          this.setState({
-            equalOp: value
+    }
+    calculateResult () {
+        const allOperators = {
+            '+': function(num1, num2) {
+                return num1 + num2;
+            },
+            '-': function(num1, num2) {
+                return num1 - num2;
+            },
+            'X': function(num1, num2) {
+                return num1 * num2;
+            },
+            '÷': function(num1, num2) {
+                return num1 / num2;
+            },
+        };
+        const operation = allOperators[this.state.operator];
+        const result = operation(+this.state.leftNumber, +this.state.rightNumber);
+        this.setState({
+            leftNumber: result,
+            operator: '',
+            rightNumber: ''
         });
     }
     render() {
         let displayValue = this.state.operator === '' ? this.state.leftNumber : this.state.rightNumber;
-        // let end;
-        // if (this.state.leftNumber && this.state.operator && this.state.rightNumber) {
-        //     const func = allOperators[this.state.operator];
-        //     const result = func(Number(this.state.leftNumber), Number(this.state.rightNumber));
-        //     return end = result;
-        // }
-        // if (this.state.equalOp) {
-        //    return displayValue = end;
-        // }
         return (
             <div>
                 <div className = "component-Calculator" >
                     <Display newNumber = {displayValue}/>              
                 </div>
                 <div>
-                     <NumberPad addNumber={this.addNumber}/>
-                     <OperatorPad addOperator={this.addOperator}/>
+                    <NumberPad addNumber={this.addNumber}/>
+                    <OperatorPad addOperator={this.addOperator} calculateResult={this.calculateResult} />
                  </div>
-
             </div>
         );
     }
